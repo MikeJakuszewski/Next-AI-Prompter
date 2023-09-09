@@ -7,18 +7,22 @@ import { usePathname, useRouter } from "next/navigation";
 const PromptCard = ({
   prompt,
   tag,
-  creator: { email, username, image },
+  creator: { email, username, image, _id },
   handleTagClick,
   handleEdit,
   handleDelete,
 }) => {
   const [copied, setCopied] = useState("");
+  const { data: session } = useSession();
+  const pathName = usePathname();
+  const router = useRouter();
 
   const handleCopy = async () => {
     setCopied(prompt);
     await navigator.clipboard.writeText(prompt);
     setTimeout(() => setCopied(""), 3000);
   };
+  console.log(session?.user.id, _id);
 
   return (
     <div className="prompt_card">
@@ -57,6 +61,16 @@ const PromptCard = ({
       >
         {tag}
       </p>
+      {session?.user.id === _id && pathName === "/profile" && (
+        <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3 ">
+          <p className=" font-inter text-sm cursor-pointer green_gradient">
+            Edit
+          </p>
+          <p className=" font-inter text-sm cursor-pointer orange_gradient">
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   );
 };
