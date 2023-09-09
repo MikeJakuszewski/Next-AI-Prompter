@@ -22,7 +22,6 @@ const PromptCard = ({
     await navigator.clipboard.writeText(prompt);
     setTimeout(() => setCopied(""), 3000);
   };
-  console.log(session?.user.id, _id);
 
   return (
     <div className="prompt_card">
@@ -63,10 +62,16 @@ const PromptCard = ({
       </p>
       {session?.user.id === _id && pathName === "/profile" && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3 ">
-          <p className=" font-inter text-sm cursor-pointer green_gradient">
+          <p
+            className=" font-inter text-sm cursor-pointer green_gradient"
+            onClick={handleEdit}
+          >
             Edit
           </p>
-          <p className=" font-inter text-sm cursor-pointer orange_gradient">
+          <p
+            className=" font-inter text-sm cursor-pointer orange_gradient"
+            onClick={handleDelete}
+          >
             Delete
           </p>
         </div>
